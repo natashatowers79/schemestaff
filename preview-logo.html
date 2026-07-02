@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Logo preview — Scheme Staff</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ── NAVBAR ── -->
+  <nav class="navbar">
+    <div class="nav-inner">
+      <div class="nav-logo">
+        <a href="index.html"><img src="assets/logo-light.png" alt="Scheme Staff — home"></a>
+      </div>
+      <div class="nav-links">
+        <a href="login.html" class="nav-link">Log in</a>
+        <a href="register-employer.html" class="btn btn-outline">Hire Staff</a>
+        <a href="register-employee.html" class="btn btn-primary">Find Work</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ── HERO ── -->
+  <section class="hero">
+    <div class="hero-inner">
+      <h1 class="hero-heading">Connecting property professionals<br>with the <span class="highlight">right opportunities.</span></h1>
+      <p class="hero-sub">Scheme Staff matches managing agents with qualified, verified property management staff — faster, smarter, and built for the industry.</p>
+      <div class="hero-buttons">
+        <a href="register-employer.html" class="btn btn-primary btn-large">I need to hire staff</a>
+        <a href="register-employee.html" class="btn btn-outline btn-large">I'm looking for work</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── HOW IT WORKS ── -->
+  <section class="how-it-works">
+    <div class="section-inner">
+      <p class="section-eyebrow">How it works</p>
+      <h2 class="section-heading">Three steps to the right match</h2>
+      <div class="steps-grid">
+        <div class="step-card">
+          <div class="step-num">01</div>
+          <h3>Register your profile</h3>
+          <p>Employers register their company. Candidates build a verified profile with their qualifications, experience and availability.</p>
+        </div>
+        <div class="step-card">
+          <div class="step-num">02</div>
+          <h3>Post or get matched</h3>
+          <p>Employers post a role using smart templates. Our matching engine finds the best-fit candidates based on skills, location and availability.</p>
+        </div>
+        <div class="step-card">
+          <div class="step-num">03</div>
+          <h3>Connect and hire</h3>
+          <p>Confirm your match, review profiles, and take it from there. Both parties rate each other to build trust over time.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FOR EMPLOYERS ── -->
+  <section class="split-section">
+    <div class="section-inner split-inner">
+      <div class="split-text">
+        <p class="section-eyebrow">For employers</p>
+        <h2 class="section-heading">Find the right person, faster.</h2>
+        <p class="split-body">Stop sifting through irrelevant CVs. Post a role in minutes using industry-specific templates and let Scheme Staff surface verified candidates who actually fit.</p>
+        <a href="register-employer.html" class="btn btn-primary">Register as an employer</a>
+      </div>
+      <div class="split-visual employer-visual">
+        <div class="visual-card">
+          <div class="visual-label">Role posted</div>
+          <div class="visual-title">Property Manager</div>
+          <div class="visual-tags">
+            <span class="vtag">Cape Town</span>
+            <span class="vtag">Permanent</span>
+            <span class="vtag">PPRA Required</span>
+          </div>
+          <div class="visual-match">3 verified matches found</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FOR CANDIDATES ── -->
+  <section class="split-section split-reverse">
+    <div class="section-inner split-inner">
+      <div class="split-visual candidate-visual">
+        <div class="visual-card">
+          <div class="visual-label">Your profile</div>
+          <div class="visual-title">Leasing Agent · Cape Town</div>
+          <div class="visual-tags">
+            <span class="vtag teal">Verified</span>
+            <span class="vtag">5 yrs experience</span>
+            <span class="vtag">PPRA Registered</span>
+          </div>
+          <div class="visual-match">2 new matches</div>
+        </div>
+      </div>
+      <div class="split-text">
+        <p class="section-eyebrow">For candidates</p>
+        <h2 class="section-heading">Your next role is waiting.</h2>
+        <p class="split-body">Build a verified profile that does the work for you. Get matched to roles that fit your skills, location and salary expectations — without the endless job hunting.</p>
+        <a href="register-employee.html" class="btn btn-primary">Register as a candidate</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── CTA ── -->
+  <section class="cta-section">
+    <div class="section-inner cta-inner">
+      <h2 class="cta-heading">Ready to get started?</h2>
+      <p class="cta-sub">Join Scheme Staff today — it's free to register.</p>
+      <div class="hero-buttons">
+        <a href="register-employer.html" class="btn btn-primary btn-large">Hire staff</a>
+        <a href="register-employee.html" class="btn btn-outline btn-large">Find work</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FOOTER ── -->
+  <footer class="footer">
+    <div class="section-inner footer-inner">
+      <img src="assets/logo-light.png" alt="Scheme Staff" class="footer-logo">
+      <p class="footer-copy">© 2026 Scheme Staff. Property Recruitment.</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+
+  <!-- logo colour preview toggle (this page only) -->
+  <div style="position:fixed; bottom:24px; left:50%; transform:translateX(-50%); z-index:999; background:#344849; border:1px solid rgba(255,255,255,0.25); border-radius:30px; padding:8px 10px; display:flex; gap:8px; box-shadow:0 4px 20px rgba(0,0,0,0.4);">
+    <button onclick="setLogo('light', this)" class="btn btn-primary" style="border-radius:20px;">White S</button>
+    <button onclick="setLogo('teal', this)" class="btn btn-outline" style="border-radius:20px;">Teal S</button>
+  </div>
+  <script>
+    function setLogo(variant, btn) {
+      document.querySelectorAll('img[src^="assets/logo"]').forEach(img => {
+        img.src = 'assets/logo-' + variant + '.png';
+      });
+      document.querySelectorAll('div[style*="fixed"] button').forEach(b => {
+        b.className = 'btn btn-outline';
+      });
+      btn.className = 'btn btn-primary';
+    }
+  </script>
+</body>
+</html>
