@@ -563,6 +563,46 @@ body::after {
 .form-link:hover { text-decoration: underline; }
 .btn-submit { align-self: flex-start; }
 
+/* ── VALIDATION STATES ── */
+.form-group.has-error input,
+.form-group.has-error select,
+.form-group.has-error textarea,
+.form-group.has-error .file-upload-label {
+  border-color: var(--orange);
+}
+.form-group.has-error label {
+  color: var(--orange);
+}
+.form-terms.has-error {
+  color: var(--orange);
+}
+
+/* ── FORM SUCCESS ── */
+.form-success {
+  text-align: center;
+  background: rgba(119,205,208,0.06);
+  border: 1px solid rgba(119,205,208,0.25);
+  border-radius: 14px;
+  padding: 56px 36px;
+}
+.form-success h2 {
+  font-size: 26px;
+  font-weight: 300;
+  color: #fff;
+  margin-bottom: 12px;
+}
+.form-success p {
+  font-size: 15px;
+  color: var(--muted);
+  line-height: 1.7;
+  margin-bottom: 8px;
+}
+.form-success-note {
+  font-size: 13px !important;
+  color: var(--teal) !important;
+  margin-bottom: 24px !important;
+}
+
 /* ── RESPONSIVE FORM ── */
 @media (max-width: 640px) {
   .form-grid { grid-template-columns: 1fr; }
