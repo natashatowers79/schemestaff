@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register as a Candidate — Scheme Staff</title>
+  <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .optional { color: var(--muted); font-weight: 400; }
+
+    /* Checkbox & radio groups */
+    .checkbox-group {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 4px;
+    }
+    .checkbox-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      color: var(--text);
+      cursor: pointer;
+    }
+    .checkbox-item input[type="checkbox"],
+    .checkbox-item input[type="radio"] {
+      width: 16px;
+      height: 16px;
+      accent-color: var(--teal);
+      flex-shrink: 0;
+      cursor: pointer;
+    }
+
+    /* Status selector */
+    .status-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-top: 4px;
+    }
+    .status-card { position: relative; cursor: pointer; }
+    .status-card input[type="radio"] {
+      position: absolute;
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+    .status-label {
+      display: block;
+      padding: 14px 16px;
+      border: 1px solid var(--rule);
+      border-radius: 8px;
+      background: rgba(255,255,255,0.03);
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+      text-align: center;
+    }
+    .status-card input[type="radio"]:checked + .status-label {
+      border-color: var(--teal);
+      background: rgba(119,205,208,0.08);
+    }
+    .status-label:hover { border-color: rgba(119,205,208,0.4); }
+    .status-name {
+      font-size: 13px;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 3px;
+    }
+    .status-desc { font-size: 11px; color: var(--muted); line-height: 1.4; }
+
+    /* Sharing preference (credit report) */
+    .share-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 4px;
+    }
+    .share-card { position: relative; cursor: pointer; }
+    .share-card input[type="radio"] {
+      position: absolute;
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+    .share-label {
+      display: block;
+      padding: 16px;
+      border: 1px solid var(--rule);
+      border-radius: 8px;
+      background: rgba(255,255,255,0.03);
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .share-card input[type="radio"]:checked + .share-label {
+      border-color: var(--teal);
+      background: rgba(119,205,208,0.08);
+    }
+    .share-label:hover { border-color: rgba(119,205,208,0.4); }
+    .share-name { font-size: 13px; font-weight: 700; color: #fff; margin-bottom: 4px; }
+    .share-desc { font-size: 12px; color: var(--muted); line-height: 1.5; }
+
+    /* Certificate blocks */
+    .cert-block {
+      border: 1px solid var(--rule);
+      border-radius: 10px;
+      padding: 16px;
+      margin-bottom: 12px;
+      background: rgba(255,255,255,0.02);
+    }
+    .cert-block-title {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--teal);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    .field-note {
+      font-size: 12px;
+      color: var(--muted);
+      grid-column: 1 / -1;
+      padding: 10px 14px;
+      background: rgba(119,205,208,0.06);
+      border: 1px solid rgba(119,205,208,0.15);
+      border-radius: 6px;
+    }
+
+    @media (max-width: 640px) {
+      .checkbox-group,
+      .status-grid,
+      .share-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <div class="nav-inner">
+      <div class="nav-logo">
+        <img src="assets/logo.png" alt="Scheme Staff">
+      </div>
+      <div class="nav-links">
+        <a href="login.html" class="nav-link">Log in</a>
+        <a href="register-employer.html" class="btn btn-outline">Hire Staff</a>
+        <a href="register-employee.html" class="btn btn-primary">Find Work</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- PAGE HEADER -->
+  <div class="page-header">
+    <div class="page-header-inner">
+      <p class="section-eyebrow">Candidate registration</p>
+      <h1 class="page-title">Build your <span class="highlight">profile</span></h1>
+      <p class="page-subtitle">Register your skills, qualifications and availability to get matched with the right roles in property management.</p>
+    </div>
+  </div>
+
+  <!-- FORM -->
+  <main class="form-page">
+    <div class="form-container">
+      <form>
+
+        <!-- SECTION 1 — Personal details -->
+        <div class="form-section">
+          <div class="form-section-header">
+            <div class="form-section-num">1</div>
+            <h2 class="form-section-title">Personal details</h2>
+          </div>
+          <div class="form-grid">
+            <div class="form-group">
+              <label>Full name <span class="required">*</span></label>
+              <input type="text" placeholder="First and last name">
+            </div>
+            <div class="form-group">
+              <label>ID / passport number <span class="required">*</span></label>
+              <input type="text" placeholder="SA ID or passport number">
+            </div>
+            <div class="form-group">
+              <label>Date of birth <span class="required">*</span></label>
+              <input type="date">
+            </div>
+            <div class="form-group">
+              <label>Contact number <span class="required">*</span></label>
+              <input type="tel" placeholder="e.g. 082 123 4567">
+            </div>
+            <div class="form-group">
+              <label>Email address <span class="required">*</span></label>
+              <input type="email" placeholder="you@email.com">
+            </div>
+            <div class="form-group">
+              <label>Address <span class="required">*</span></label>
+              <input type="text" placeholder="Suburb, city, province">
+            </div>
+            <div class="form-group full">
+              <label>Highest level of education <span class="required">*</span></label>
+              <select>
+                <option value="" disabled selected>Select...</option>
+                <option>Matric / Grade 12</option>
+                <option>Certificate (NQF 4–5)</option>
+                <option>Diploma (NQF 6)</option>
+                <option>Bachelor's Degree (NQF 7)</option>
+                <option>Honours / Postgraduate Diploma (NQF 8)</option>
+                <option>Master's Degree (NQF 9)</option>
+                <option>Doctoral Degree (NQF 10)</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- SECTION 2 — Professional background -->
+        <div class="form-section">
+          <div class="form-section-header">
+            <div class="form-section-num">2</div>
+            <h2 class="form-section-title">Professional background</h2>
+          </div>
+          <div class="form-grid">
+            <div class="form-group">
+              <label>Current / most recent job title <span class="required">*</span></label>
+              <input type="text" placeholder="e.g. Property Manager">
+            </div>
+            <div class="form-group">
+              <label>Employer name <span class="required">*</span></label>
+              <input type="text" placeholder="Company you work or worked for">
+            </div>
+            <div class="form-group">
+              <label>Years of industry experience <span class="required">*</span></label>
+              <select>
+                <option value="" disabled selected>Select...</option>
+                <option>Less than 1 year</option>
+                <option>1–2 years</option>
+                <option>3–5 years</option>
+                <option>6–10 years</option>
+                <option>More than 10 years</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Reason for leaving <span class="optional">(optional)</span></label>
+              <input type="text" placeholder="e.g. Seeking new challenge">
+            </div>
+          </div>
+        </div>
+
+        <!-- SECTION 3 — Work preferences -->
+        <div class="form-section">
+          <div class="form-section-header">
+            <div class="form-section-num">3</div>
+            <h2 class="form-section-title">Work preferences</h2>
+          </div>
+          <div class="form-grid">
+            <div class="form-group full">
+              <label>Employment type sought</label>
+              <div class="checkbox-group">
+                <label class="checkbox-item"><input type="checkbox"> Full-time permanent</label>
+                <label class="checkbox-item"><input type="checkbox"> Part-time</label>
+                <label class="checkbox-item"><input type="checkbox"> Contract / Fixed-term</label>
+                <label class="checkbox-item"><input type="checkbox"> Freelance / Ad hoc</label>
+              </div>
+            </div>
+            <div class="form-group full">
+              <label>Work arrangement preference</label>
+              <div class="checkbox-group">
+                <label class="checkbox-item"><input type="checkbox"> In-office</label>
+                <label class="checkbox-item"><input type="checkbox"> Hybrid</label>
+                <label class="checkbox-item"><input type="checkbox"> Work from home</label>
+              </div>
+            </div>
+            <div class="form-group full">
+              <label>Open to</label>
+              <div class="checkbox-group">
+                <label class="checkbox-item"><input type="checkbox"> Once-off jobs</label>
+                <label class="checkbox-item"><input type="checkbox"> Ongoing placements</label>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Own transport</label>
+              <select>
+                <option value="" disabled selected>Select...</option>
+                <option>Yes</option>
+                <option>No</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Available for after-hours meetings</label>
+              <select>
+                <option value="" disabled selected>Select...</option>
+                <option>Yes</option>
+                <option>No</option>
+                <option>Occasionally</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- SECTION 4 — Skills & specialisations -->
+        <div class="form-section">
+          <div class="form-section-header">
+            <div class="form-section-num">4</div>
+            <h2 class="form-section-title">Skills &amp; specialisations</h2>
+          </div>
+          <div class="form-grid">
+            <div class="form-group full">
+              <label>Primary role / trade <span class="required">*</span></label>
+              <select>
+                <option value="" disabled selected>Select your main role...</option>
+                <option>Property Manager</option>
+                <option>Body Corporate / HOA Manager</option>
+                <option>Leasing Agent</option>
+                <option>Maintenance Coordinator</option>
+                <option>Bookkeeper / Financial Administrator</option>
+                <option>Receptionist / Administrator</option>
+                <option>Caretaker / Building Manager</option>
+                <option>Facilities Manager</option>
+                <option>Debt Collector</option>
+                <option>Legal Administrator</option>
+                <option>Other</option>
+              </select>
+            </div>
+            <div class="form-group full">
+              <label>Additional skills</label>
+              <div class="checkbox-group">
+                <label class="checkbox-item"><input type="checkbox"> Levy administration</label>
+                <label class="checkbox-item"><input type="checkbox"> Trust accounting</label>
+                <label class="checkbox-item"><input type="checkbox"> Maintenance management</label>
+                <label class="checkbox-item"><input type="checkbox"> Tenant liaison</label>
+                <label class="checkbox-item"><input type="checkbox"> Legal compliance</label>
+                <label class="checkbox-item"><input type="checkbox"> CSOS / Tribunal experience</label>
+                <label class="checkbox-item"><input type="checkbox"> Insurance claims</label>
+                <label class="checkbox-item"><input type="checkbox"> Body corporate secretarial</label>
+                <label class="checkbox-item"><input type="checkbox"> Project management</label>
+                <label class="checkbox-item"><input type="checkbox"> Dispute resolution</label>
+              </div>
+            </div>
+            <div class="form-group full">
+              <label>Specialisations <span class="optional">(optional)</span></label>
+              <textarea placeholder="Describe any specialisations, software systems you use, or anything else relevant..."></textarea>
+            </div>
+          </div>
+        </div>
+
+        <!-- SECTION 5 — Certificates -->
+        <div class="form-section">
+          <div class="form-section-header">
+            <div class="form-section-num">5</div>
+            <h2 class="form-section-title">Certificates &amp; qualifications</h2>
+          </div>
+
+          <div class="cert-block">
+            <div class="cert-block-title">Certificate 1</div>
+            <div class="form-grid">
+              <div class="form-group full">
+                <label>Certificate name</label>
+                <input type="text" placeholder="e.g. NQF5 in Property Management">
+              </div>
+              <div class="form-group full">
+                <label>Upload certificate</label>
+                <div class="file-upload">
+                  <input type="file" accept=".pdf,.jpg,.png">
+                  <div class="file-upload-label">
+                    <span class="file-icon">↑</span>
+                    <span>Choose file — PDF, JPG or PNG</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="cert-block">
+            <div class="cert-block-title">Certificate 2</div>
+            <div class="form-grid">
+              <div class="form-group full">
+                <label>Certificate name</label>
+                <input type="text" placeholder="e.g. PPRA Fidelity Fund Certificate">
+              </div>
+              <div class="form-group full">
+                <label>Upload certificate</label>
+                <div class="file-upload">
+                  <input type="file" accept=".pdf,.jpg,.png">
+                  <div class="file-upload-label">
+                    <span class="file-icon">↑</span>
+                    <span>Choose file — PDF, JPG or PNG</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="cert-block">
+            <div class="cert-block-title">Certificate 3 <span class="optional">(optional)</span></div>
+            <div class="form-grid">
+              <div class="form-group full">
+                <label>Certificate name</label>
+                <input type="text" placeholder="e.g. Short course, CPD points, online training">
+              </div>
+              <div class="form-group full">
+                <label>Upload certificate</label>
+                <div class="file-upload">
+                  <input type="file" accept=".pdf,.jpg,.png">
+                  <div class="file-upload-label">
+                    <span class="file-icon">↑</span>
+                    <span>Choose file — PDF, JPG or PNG</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-grid" style="margin-top:16px">
+            <div class="form-group full">
+              <label>PPRA registration number <span class="optional">(if applicable)</span></label>
+              <input type="text" placeholder="e.g. PR1234567">
+            </div>
+          </div>
+        </div>
+
+        <!-- SECTION 6 — Salary -->
+        <div class="form-section">
+          <div class="form-section-header">
+            <div class="form-section-num">6</div>
+            <h2 class="form-section-title">Salary</h2>
+          </div>
+          <div class="form-grid">
+            <p class="field-note">Salary information is only shared with employers you match with and choose to apply to.</p>
+            <div class="form-group">
+              <label>Current / most recent salary</label>
+              <input type="text" placeholder="e.g. R22 000 p/m CTC">
+            </div>
+            <div class="form-group">
+              <label>Salary expectation</label>
+              <input type="text" placeholder="e.g. R28 000 p/m CTC">
+            </div>
+          </div>
+        </div>
+
+        <!-- SECTION 7 — Availability -->
+        <div class="form-section">
+          <div class="form-section-header">
+            <div class="form-section-num">7</div>
+            <h2 class="form-section-title">Availability</h2>
+          </div>
+          <div class="form-grid">
+            <div class="form-group">
+              <label>Available from</label>
+              <input type="date">
+            </div>
+            <div class="form-group">
+              <label>Recurring availability <span class="optional">(optional)</span></label>
+              <input type="text" placeholder="e.g. Mon–Fri, flexible hours">
+            </div>
+            <div class="form-group">
+              <label>Notice period</label>
+              <select>
+                <option value="" disabled selected>Select...</option>
+                <option>Immediately available</option>
+                <option>1 week</option>
+                <option>2 weeks</option>
+                <option>1 month</option>
+                <option>2 months</option>
+                <option>3 months</option>
+                <option>Other</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Notice period type</label>
+              <select>
+                <option value="" disabled selected>Select...</option>
+                <option>Calendar months</option>
+                <option>30-day periods</option>
+                <option>Not applicable</option>
+              </select>
+            </div>
+            <div class="form-group full">
+              <label>Current availability status</label>
+              <div class="status-grid">
+                <label class="status-card">
+                  <input type="radio" name="availability_status" value="active">
+                  <div class="status-label">
+                    <div class="status-name">Actively looking</div>
+                    <div class="status-desc">Visible in matching and open to all roles</div>
+                  </div>
+                </label>
+                <label class="status-card">
+                  <input type="radio" name="availability_status" value="open">
+                  <div class="status-label">
+                    <div class="status-name">Open to opportunities</div>
+                    <div class="status-desc">Visible, but not urgently seeking</div>
+                  </div>
+                </label>
+                <label class="status-card">
+                  <input type="radio" name="availability_status" value="unavailable">
+                  <div class="status-label">
+                    <div class="status-name">Not currently looking</div>
+                    <div class="status-desc">Profile saved but removed from matching</div>
+                  </div>
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- SECTION 8 — Location & travel -->
+        <div class="form-section">
+          <div class="form-section-header">
+            <div class="form-section-num">8</div>
+            <h2 class="form-section-title">Location &amp; travel</h2>
+          </div>
+          <div class="form-grid">
+            <div class="form-group">
+              <label>Preferred work location(s) <span class="required">*</span></label>
+              <input type="text" placeholder="e.g. Cape Town CBD, Southern Suburbs">
+            </div>
+            <div class="form-group">
+              <label>Maximum travel radius</label>
+              <select>
+                <option value="" disabled selected>Select...</option>
+                <option>Within 10km</option>
+                <option>Within 25km</option>
+                <option>Within 50km</option>
+                <option>Province-wide</option>
+                <option>Anywhere in South Africa</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Willing to relocate</label>
+              <select>
+                <option value="" disabled selected>Select...</option>
+                <option>Yes</option>
+                <option>No</option>
+                <option>Open to discussion</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- SECTION 9 — Account -->
+        <div class="form-section">
+          <div class="form-section-header">
+            <div class="form-section-num">9</div>
+            <h2 class="form-section-title">Account</h2>
+          </div>
+          <div class="form-grid">
+            <div class="form-group full">
+              <label>Login email address <span class="required">*</span></label>
+              <input type="email" placeholder="This will be your username">
+            </div>
+            <div class="form-group">
+              <label>Password <span class="required">*</span></label>
+              <input type="password" placeholder="Minimum 8 characters">
+            </div>
+            <div class="form-group">
+              <label>Confirm password <span class="required">*</span></label>
+              <input type="password" placeholder="Repeat your password">
+            </div>
+          </div>
+        </div>
+
+        <!-- FORM FOOTER -->
+        <div class="form-footer">
+          <label class="form-terms">
+            <input type="checkbox">
+            I agree to the <a href="#" class="form-link">Terms &amp; Conditions</a> and <a href="#" class="form-link">Privacy Policy</a>. I confirm that all information provided is accurate and up to date.
+          </label>
+          <button type="submit" class="btn btn-primary btn-large btn-submit">Create my profile</button>
+        </div>
+
+      </form>
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="section-inner footer-inner">
+      <img src="assets/logo.png" alt="Scheme Staff" class="footer-logo">
+      <p class="footer-copy">© 2026 Scheme Staff. Property Recruitment.</p>
+    </div>
+  </footer>
+
+</body>
+</html>

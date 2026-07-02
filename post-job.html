@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Post a Role — Scheme Staff</title>
+  <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .optional { color: var(--muted); font-weight: 400; }
+
+    /* Toggle checkboxes */
+    .toggle-group {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-top: 4px;
+    }
+    .toggle-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 14px 16px;
+      border: 1px solid var(--rule);
+      border-radius: 8px;
+      background: rgba(255,255,255,0.03);
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .toggle-item:has(input:checked) {
+      border-color: var(--teal);
+      background: rgba(119,205,208,0.08);
+    }
+    .toggle-item input[type="checkbox"] {
+      width: 16px;
+      height: 16px;
+      accent-color: var(--teal);
+      flex-shrink: 0;
+      margin-top: 2px;
+      cursor: pointer;
+    }
+    .toggle-text strong {
+      display: block;
+      font-size: 13px;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 3px;
+    }
+    .toggle-text span {
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    /* Radio cards (employment type, work arrangement) */
+    .radio-group {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 4px;
+    }
+    .radio-card { position: relative; cursor: pointer; }
+    .radio-card input[type="radio"] {
+      position: absolute;
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+    .radio-label {
+      display: block;
+      padding: 14px 16px;
+      border: 1px solid var(--rule);
+      border-radius: 8px;
+      background: rgba(255,255,255,0.03);
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+      text-align: center;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text);
+    }
+    .radio-card input[type="radio"]:checked + .radio-label {
+      border-color: var(--teal);
+      background: rgba(119,205,208,0.08);
+      color: #fff;
+    }
+    .radio-label:hover { border-color: rgba(119,205,208,0.4); }
+
+    .radio-group-3 {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .field-note {
+      font-size: 12px;
+      color: var(--muted);
+      grid-column: 1 / -1;
+      padding: 10px 14px;
+      background: rgba(119,205,208,0.06);
+      border: 1px solid rgba(119,205,208,0.15);
+      border-radius: 6px;
+    }
+
+    .rate-row {
+      display: grid;
+      grid-template-columns: 160px 1fr;
+      gap: 12px;
+    }
+
+    @media (max-width: 640px) {
+      .radio-group,
+      .radio-group-3 { grid-template-columns: 1fr; }
+      .rate-row { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <div class="nav-inner">
+      <div class="nav-logo">
+        <img src="assets/logo.png" alt="Scheme Staff">
+      </div>
+      <div class="nav-links">
+        <a href="login.html" class="nav-link">Log in</a>
+        <a href="register-employer.html" class="btn btn-outline">Hire Staff</a>
+        <a href="register-employee.html" class="btn btn-primary">Find Work</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- PAGE HEADER -->
+  <div class="page-header">
+    <div class="page-header-inner">
+      <p class="section-eyebrow">Employer · Post a role</p>
+      <h1 class="page-title">What do you <span class="highlight">need?</span></h1>
+      <p class="page-subtitle">Describe the role and we'll find the best-fit candidates from across the platform.</p>
+    </div>
+  </div>
+
+  <!-- FORM -->
+  <main class="form-page">
+    <div class="form-container">
+      <form>
+
+        <!-- SECTION 1 — Role -->
+        <div class="form-section">
+          <div class="form-section-header">
+            <div class="form-section-num">1</div>
+            <h2 class="form-section-title">Role</h2>
+          </div>
+          <div class="form-grid">
+            <div class="form-group">
+              <label>Job title <span class="required">*</span></label>
+              <select>
+                <option value="" disabled selected>Select a role...</option>
+                <option>Property Manager</option>
+                <option>Body Corporate / HOA Manager</option>
+                <option>Leasing Agent</option>
+                <option>Maintenance Coordinator</option>
+                <option>Bookkeeper / Financial Administrator</option>
+                <option>Receptionist / Administrator</option>
+                <option>Caretaker / Building Manager</option>
+                <option>Facilities Manager</option>
+                <option>Debt Collector</option>
+                <option>Legal Administrator</option>
+                <option>Other</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Employment type <span class="required">*</span></label>
+              <div class="radio-group" style="margin-top:8px">
+                <label class="radio-card">
+                  <input type="radio" name="employment_type" value="once-off">
+                  <div class="radio-label">Once-off</div>
+                </label>
+                <label class="radio-card">
+                  <input type="radio" name="employment_type" value="ongoing">
+                  <div class="radio-label">Ongoing placement</div>
+                </label>
+              </div>
+            </div>
+            <div class="form-group full">
+              <label>Work arrangement</label>
+              <div class="radio-group radio-group-3" style="margin-top:8px">
+                <label class="radio-card">
+                  <input type="radio" name="work_arrangement" value="office">
+                  <div class="radio-label">In-office</div>
+                </label>
+                <label class="radio-card">
+                  <input type="radio" name="work_arrangement" value="hybrid">
+                  <div class="radio-label">Hybrid</div>
+                </label>
+                <label class="radio-card">
+                  <input type="radio" name="work_arrangement" value="remote">
+                  <div class="radio-label">Work from home</div>
+                </label>
+              </div>
+            </div>
+            <div class="form-group full">
+              <label>Requirements for this role</label>
+              <div class="toggle-group">
+                <label class="toggle-item">
+                  <input type="checkbox" name="ppra_required">
+                  <div class="toggle-text">
+                    <strong>PPRA registration required</strong>
+                    <span>Only candidates with a valid PPRA registration number will be matched to this role.</span>
+                  </div>
+                </label>
+                <label class="toggle-item">
+                  <input type="checkbox" name="credit_required">
+                  <div class="toggle-text">
+                    <strong>Credit report required</strong>
+                    <span>Recommended for roles involving trust accounts, levy collection or financial administration.</span>
+                  </div>
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- SECTION 3 — Schedule -->
+        <div class="form-section">
+          <div class="form-section-header">
+            <div class="form-section-num">2</div>
+            <h2 class="form-section-title">Schedule</h2>
+          </div>
+          <div class="form-grid">
+            <div class="form-group">
+              <label>Start date <span class="required">*</span></label>
+              <input type="date">
+            </div>
+            <div class="form-group">
+              <label>End date <span class="optional">(if once-off)</span></label>
+              <input type="date">
+            </div>
+            <div class="form-group full">
+              <label>Hours / schedule</label>
+              <div class="radio-group radio-group-3" style="margin-top:8px">
+                <label class="radio-card">
+                  <input type="radio" name="hours" value="fulltime">
+                  <div class="radio-label">Full-time</div>
+                </label>
+                <label class="radio-card">
+                  <input type="radio" name="hours" value="parttime">
+                  <div class="radio-label">Part-time</div>
+                </label>
+                <label class="radio-card">
+                  <input type="radio" name="hours" value="flexible">
+                  <div class="radio-label">Flexible</div>
+                </label>
+              </div>
+            </div>
+            <div class="form-group full">
+              <label>Schedule details <span class="optional">(optional)</span></label>
+              <input type="text" placeholder="e.g. Mon–Fri 08:00–17:00, or Tue & Thu mornings">
+            </div>
+          </div>
+        </div>
+
+        <!-- SECTION 4 — Rate -->
+        <div class="form-section">
+          <div class="form-section-header">
+            <div class="form-section-num">3</div>
+            <h2 class="form-section-title">Rate</h2>
+          </div>
+          <div class="form-grid">
+            <p class="field-note">Rate is only shared with candidates you match with and who choose to apply.</p>
+            <div class="form-group full">
+              <label>Rate offered</label>
+              <div class="rate-row">
+                <select>
+                  <option value="" disabled selected>Per...</option>
+                  <option>Per hour</option>
+                  <option>Per day</option>
+                  <option>Per month</option>
+                </select>
+                <input type="text" placeholder="e.g. R28 000 CTC or R350">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- SECTION 5 — Additional detail -->
+        <div class="form-section">
+          <div class="form-section-header">
+            <div class="form-section-num">4</div>
+            <h2 class="form-section-title">Additional detail</h2>
+          </div>
+          <div class="form-grid">
+            <div class="form-group full">
+              <label>Role description <span class="optional">(optional)</span></label>
+              <textarea placeholder="Describe the role, key responsibilities, and what you're looking for in a candidate..."></textarea>
+            </div>
+            <div class="form-group full">
+              <label>Specific certifications or requirements <span class="optional">(optional)</span></label>
+              <input type="text" placeholder="e.g. Sectional Titles Act knowledge, MDA experience">
+            </div>
+          </div>
+        </div>
+
+        <!-- FORM FOOTER -->
+        <div class="form-footer">
+          <label class="form-terms">
+            <input type="checkbox">
+            I confirm this posting is accurate and that I am authorised to hire on behalf of this company. I agree to the <a href="#" class="form-link">Terms &amp; Conditions</a>.
+          </label>
+          <button type="submit" class="btn btn-primary btn-large btn-submit">Post this role</button>
+        </div>
+
+      </form>
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="section-inner footer-inner">
+      <img src="assets/logo.png" alt="Scheme Staff" class="footer-logo">
+      <p class="footer-copy">© 2026 Scheme Staff. Property Recruitment.</p>
+    </div>
+  </footer>
+
+</body>
+</html>

@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register as an Employer — Scheme Staff</title>
+  <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .checkbox-group {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 4px;
+    }
+    .checkbox-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      color: var(--text);
+      cursor: pointer;
+    }
+    .checkbox-item input[type="checkbox"] {
+      width: 16px;
+      height: 16px;
+      accent-color: var(--teal);
+      flex-shrink: 0;
+      cursor: pointer;
+    }
+    .field-note {
+      font-size: 12px;
+      color: var(--muted);
+      grid-column: 1 / -1;
+      padding: 10px 14px;
+      background: rgba(119,205,208,0.06);
+      border: 1px solid rgba(119,205,208,0.15);
+      border-radius: 6px;
+    }
+    .optional {
+      color: var(--muted);
+      font-weight: 400;
+    }
+    .plan-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin-top: 4px;
+    }
+    .plan-card {
+      position: relative;
+      cursor: pointer;
+    }
+    .plan-card input[type="radio"] {
+      position: absolute;
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+    .plan-label {
+      display: block;
+      padding: 20px 18px;
+      border: 1px solid var(--rule);
+      border-radius: 10px;
+      background: rgba(255,255,255,0.03);
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .plan-card input[type="radio"]:checked + .plan-label {
+      border-color: var(--teal);
+      background: rgba(119,205,208,0.08);
+    }
+    .plan-label:hover {
+      border-color: rgba(119,205,208,0.4);
+    }
+    .plan-name {
+      font-size: 14px;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 5px;
+    }
+    .plan-desc {
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+    @media (max-width: 640px) {
+      .plan-grid { grid-template-columns: 1fr; }
+      .checkbox-group { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <div class="nav-inner">
+      <div class="nav-logo">
+        <img src="assets/logo.png" alt="Scheme Staff">
+      </div>
+      <div class="nav-links">
+        <a href="login.html" class="nav-link">Log in</a>
+        <a href="register-employer.html" class="btn btn-outline">Hire Staff</a>
+        <a href="register-employee.html" class="btn btn-primary">Find Work</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- PAGE HEADER -->
+  <div class="page-header">
+    <div class="page-header-inner">
+      <p class="section-eyebrow">Employer registration</p>
+      <h1 class="page-title">Register your <span class="highlight">company</span></h1>
+      <p class="page-subtitle">Create your employer profile to start posting roles and receiving matched candidates from across the industry.</p>
+    </div>
+  </div>
+
+  <!-- FORM -->
+  <main class="form-page">
+    <div class="form-container">
+      <form>
+
+        <!-- SECTION 1 — Company details -->
+        <div class="form-section">
+          <div class="form-section-header">
+            <div class="form-section-num">1</div>
+            <h2 class="form-section-title">Company details</h2>
+          </div>
+          <div class="form-grid">
+            <div class="form-group full">
+              <label>Company name <span class="required">*</span></label>
+              <input type="text" placeholder="e.g. ABC Property Management">
+            </div>
+            <div class="form-group">
+              <label>CIPC registration number <span class="required">*</span></label>
+              <input type="text" placeholder="e.g. 2010/123456/07">
+            </div>
+            <div class="form-group">
+              <label>VAT number <span class="optional">(optional)</span></label>
+              <input type="text" placeholder="e.g. 4123456789">
+            </div>
+            <div class="form-group full">
+              <label>Website <span class="optional">(optional)</span></label>
+              <input type="url" placeholder="https://www.yourcompany.co.za">
+            </div>
+            <div class="form-group">
+              <label>Facebook <span class="optional">(optional)</span></label>
+              <input type="url" placeholder="https://facebook.com/yourpage">
+            </div>
+            <div class="form-group">
+              <label>LinkedIn <span class="optional">(optional)</span></label>
+              <input type="url" placeholder="https://linkedin.com/company/yourpage">
+            </div>
+          </div>
+        </div>
+
+        <!-- SECTION 2 — Primary contact -->
+        <div class="form-section">
+          <div class="form-section-header">
+            <div class="form-section-num">2</div>
+            <h2 class="form-section-title">Primary contact</h2>
+          </div>
+          <div class="form-grid">
+            <div class="form-group">
+              <label>Full name <span class="required">*</span></label>
+              <input type="text" placeholder="First and last name">
+            </div>
+            <div class="form-group">
+              <label>Job title <span class="required">*</span></label>
+              <input type="text" placeholder="e.g. Managing Director">
+            </div>
+            <div class="form-group">
+              <label>Email address <span class="required">*</span></label>
+              <input type="email" placeholder="you@company.co.za">
+            </div>
+            <div class="form-group">
+              <label>Phone number <span class="required">*</span></label>
+              <input type="tel" placeholder="e.g. 021 123 4567">
+            </div>
+            <div class="form-group full">
+              <label>Address <span class="required">*</span></label>
+              <input type="text" placeholder="Street address, suburb, city, province">
+            </div>
+          </div>
+        </div>
+
+        <!-- SECTION 3 — Portfolio -->
+        <div class="form-section">
+          <div class="form-section-header">
+            <div class="form-section-num">3</div>
+            <h2 class="form-section-title">Portfolio</h2>
+          </div>
+          <div class="form-grid">
+            <p class="field-note">Approximate figures are fine — this helps match you with candidates who have relevant industry experience.</p>
+            <div class="form-group">
+              <label>Sectional Title units managed</label>
+              <input type="number" placeholder="e.g. 450" min="0">
+            </div>
+            <div class="form-group">
+              <label>HOA properties managed</label>
+              <input type="number" placeholder="e.g. 12" min="0">
+            </div>
+            <div class="form-group">
+              <label>Shareblock units managed</label>
+              <input type="number" placeholder="e.g. 0" min="0">
+            </div>
+            <div class="form-group">
+              <label>Portfolio type</label>
+              <select>
+                <option value="" disabled selected>Select...</option>
+                <option>Mostly residential (80%+)</option>
+                <option>Mixed (roughly equal)</option>
+                <option>Mostly commercial (80%+)</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- SECTION 4 — Compliance -->
+        <div class="form-section">
+          <div class="form-section-header">
+            <div class="form-section-num">4</div>
+            <h2 class="form-section-title">Compliance</h2>
+          </div>
+
+          <div class="compliance-block">
+            <div class="compliance-block-header">
+              <h3>PPRA registration</h3>
+              <p>Required if your company operates as an estate agency or property practitioner.</p>
+            </div>
+            <div class="form-grid">
+              <div class="form-group full">
+                <label>PPRA registration number <span class="optional">(if applicable)</span></label>
+                <input type="text" placeholder="e.g. PR1234567">
+              </div>
+            </div>
+          </div>
+
+          <div class="compliance-block">
+            <div class="compliance-block-header">
+              <h3>Debt Collectors Certificate</h3>
+              <p>Required if your company performs debt collection activities.</p>
+            </div>
+            <div class="form-grid">
+              <div class="form-group full">
+                <label>Upload certificate <span class="optional">(if applicable)</span></label>
+                <div class="file-upload">
+                  <input type="file" accept=".pdf,.jpg,.png">
+                  <div class="file-upload-label">
+                    <span class="file-icon">↑</span>
+                    <span>Choose file — PDF, JPG or PNG</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="compliance-block">
+            <div class="compliance-block-header">
+              <h3>Professional indemnity insurance</h3>
+              <p>Upload a copy of your current certificate of insurance.</p>
+            </div>
+            <div class="form-grid">
+              <div class="form-group full">
+                <label>Upload certificate</label>
+                <div class="file-upload">
+                  <input type="file" accept=".pdf,.jpg,.png">
+                  <div class="file-upload-label">
+                    <span class="file-icon">↑</span>
+                    <span>Choose file — PDF, JPG or PNG</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="compliance-block">
+            <div class="compliance-block-header">
+              <h3>Other certifications</h3>
+              <p>Any additional compliance documents relevant to your business.</p>
+            </div>
+            <div class="form-grid">
+              <div class="form-group full">
+                <label>Upload additional documents <span class="optional">(optional)</span></label>
+                <div class="file-upload">
+                  <input type="file" accept=".pdf,.jpg,.png" multiple>
+                  <div class="file-upload-label">
+                    <span class="file-icon">↑</span>
+                    <span>Choose files — PDF, JPG or PNG</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- SECTION 5 — Roles & rates -->
+        <div class="form-section">
+          <div class="form-section-header">
+            <div class="form-section-num">5</div>
+            <h2 class="form-section-title">Roles &amp; rates</h2>
+          </div>
+          <div class="form-grid">
+            <div class="form-group full">
+              <label>Types of roles you typically hire for</label>
+              <div class="checkbox-group">
+                <label class="checkbox-item"><input type="checkbox"> Property Manager</label>
+                <label class="checkbox-item"><input type="checkbox"> Body Corporate / HOA Manager</label>
+                <label class="checkbox-item"><input type="checkbox"> Leasing Agent</label>
+                <label class="checkbox-item"><input type="checkbox"> Maintenance Coordinator</label>
+                <label class="checkbox-item"><input type="checkbox"> Bookkeeper / Financial Administrator</label>
+                <label class="checkbox-item"><input type="checkbox"> Receptionist / Administrator</label>
+                <label class="checkbox-item"><input type="checkbox"> Caretaker / Building Manager</label>
+                <label class="checkbox-item"><input type="checkbox"> Facilities Manager</label>
+                <label class="checkbox-item"><input type="checkbox"> Debt Collector</label>
+                <label class="checkbox-item"><input type="checkbox"> Legal Administrator</label>
+              </div>
+            </div>
+            <div class="form-group full">
+              <label>Typical rate ranges <span class="optional">(optional)</span></label>
+              <textarea placeholder="e.g. Property Manager: R25 000 – R35 000 p/m · Admin: R12 000 – R18 000 p/m"></textarea>
+            </div>
+          </div>
+        </div>
+
+        <!-- SECTION 6 — Subscription -->
+        <div class="form-section">
+          <div class="form-section-header">
+            <div class="form-section-num">6</div>
+            <h2 class="form-section-title">Subscription type</h2>
+          </div>
+          <div class="plan-grid">
+            <label class="plan-card">
+              <input type="radio" name="subscription" value="annual">
+              <div class="plan-label">
+                <div class="plan-name">Annual</div>
+                <div class="plan-desc">One yearly payment. Best value for companies hiring regularly throughout the year.</div>
+              </div>
+            </label>
+            <label class="plan-card">
+              <input type="radio" name="subscription" value="monthly">
+              <div class="plan-label">
+                <div class="plan-name">Monthly</div>
+                <div class="plan-desc">Pay month to month. Flexible for companies with seasonal or fluctuating hiring needs.</div>
+              </div>
+            </label>
+            <label class="plan-card">
+              <input type="radio" name="subscription" value="ads">
+              <div class="plan-label">
+                <div class="plan-name">Only when running ads</div>
+                <div class="plan-desc">Pay only when you post a role. No ongoing commitment — activate when you need to hire.</div>
+              </div>
+            </label>
+          </div>
+        </div>
+
+        <!-- SECTION 7 — Account -->
+        <div class="form-section">
+          <div class="form-section-header">
+            <div class="form-section-num">7</div>
+            <h2 class="form-section-title">Account</h2>
+          </div>
+          <div class="form-grid">
+            <div class="form-group full">
+              <label>Login email address <span class="required">*</span></label>
+              <input type="email" placeholder="This will be your username">
+            </div>
+            <div class="form-group">
+              <label>Password <span class="required">*</span></label>
+              <input type="password" placeholder="Minimum 8 characters">
+            </div>
+            <div class="form-group">
+              <label>Confirm password <span class="required">*</span></label>
+              <input type="password" placeholder="Repeat your password">
+            </div>
+          </div>
+        </div>
+
+        <!-- FORM FOOTER -->
+        <div class="form-footer">
+          <label class="form-terms">
+            <input type="checkbox">
+            I agree to the <a href="#" class="form-link">Terms &amp; Conditions</a> and <a href="#" class="form-link">Privacy Policy</a>. I confirm that the information provided is accurate and that I am authorised to register on behalf of this company.
+          </label>
+          <button type="submit" class="btn btn-primary btn-large btn-submit">Create employer profile</button>
+        </div>
+
+      </form>
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="section-inner footer-inner">
+      <img src="assets/logo.png" alt="Scheme Staff" class="footer-logo">
+      <p class="footer-copy">© 2026 Scheme Staff. Property Recruitment.</p>
+    </div>
+  </footer>
+
+</body>
+</html>
