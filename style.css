@@ -79,6 +79,12 @@ body::after {
   position: relative;
   top: 65px;
 }
+/* On interior pages the logo stays inside the navbar so it never
+   overlaps the page heading (the homepage hero has room for the overhang) */
+body:has(.page-header) .nav-logo img {
+  height: 150px;
+  top: 30px;
+}
 .nav-links {
   display: flex;
   align-items: center;
