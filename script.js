@@ -12,6 +12,7 @@ const FORM_TYPES = {
   'register-employee': 'Candidates',
   'register-employer': 'Employers',
   'post-job': 'Job postings',
+  'contact': 'Contact messages',
 };
 
 const MAX_UPLOAD_BYTES = 15 * 1024 * 1024; // Apps Script payload headroom

@@ -344,6 +344,18 @@ body:has(.page-header) .nav-logo img {
   gap: 16px;
 }
 .footer-logo { height: 70px; width: auto; }
+.footer-links {
+  display: flex;
+  gap: 18px;
+  flex-wrap: wrap;
+}
+.footer-links a {
+  font-size: 12px;
+  color: var(--muted);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.footer-links a:hover { color: var(--text); }
 .footer-copy {
   font-size: 12px;
   color: var(--muted);
@@ -358,6 +370,7 @@ body:has(.page-header) .nav-logo img {
   .split-inner { grid-template-columns: 1fr; gap: 40px; }
   .split-reverse .split-inner { direction: ltr; }
   .nav-links .btn-outline { display: none; }
+  .nav-link.nav-page { display: none; }
 }
 /* ── PAGE HEADER ── */
 .page-header {
