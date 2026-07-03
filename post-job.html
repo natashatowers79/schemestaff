@@ -52,6 +52,29 @@
       line-height: 1.5;
     }
 
+    /* Checkbox groups (skills required) */
+    .checkbox-group {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 4px;
+    }
+    .checkbox-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      color: var(--text);
+      cursor: pointer;
+    }
+    .checkbox-item input[type="checkbox"] {
+      width: 16px;
+      height: 16px;
+      accent-color: var(--teal);
+      flex-shrink: 0;
+      cursor: pointer;
+    }
+
     /* Radio cards (employment type, work arrangement) */
     .radio-group {
       display: grid;
@@ -168,6 +191,25 @@
               </select>
             </div>
             <div class="form-group">
+              <label>Province <span class="required">*</span></label>
+              <select>
+                <option value="" disabled selected>Select...</option>
+                <option>Western Cape</option>
+                <option>Gauteng</option>
+                <option>KwaZulu-Natal</option>
+                <option>Eastern Cape</option>
+                <option>Free State</option>
+                <option>Limpopo</option>
+                <option>Mpumalanga</option>
+                <option>North West</option>
+                <option>Northern Cape</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Location (city / suburb) <span class="required">*</span></label>
+              <input type="text" placeholder="e.g. Cape Town — Claremont">
+            </div>
+            <div class="form-group">
               <label>Employment type <span class="required">*</span></label>
               <div class="radio-group" style="margin-top:8px">
                 <label class="radio-card">
@@ -278,6 +320,19 @@
                 <input type="text" placeholder="e.g. R28 000 CTC or R350">
               </div>
             </div>
+            <div class="form-group full">
+              <label>Monthly salary band <span class="optional">(for ongoing roles)</span></label>
+              <select>
+                <option value="" disabled selected>Select...</option>
+                <option>Under R10 000</option>
+                <option>R10 000 – R15 000</option>
+                <option>R15 000 – R20 000</option>
+                <option>R20 000 – R30 000</option>
+                <option>R30 000 – R45 000</option>
+                <option>Over R45 000</option>
+                <option>Not applicable (once-off rate)</option>
+              </select>
+            </div>
           </div>
         </div>
 
@@ -288,6 +343,21 @@
             <h2 class="form-section-title">Additional detail</h2>
           </div>
           <div class="form-grid">
+            <div class="form-group full">
+              <label>Skills required</label>
+              <div class="checkbox-group">
+                <label class="checkbox-item"><input type="checkbox"> Levy administration</label>
+                <label class="checkbox-item"><input type="checkbox"> Trust accounting</label>
+                <label class="checkbox-item"><input type="checkbox"> Maintenance management</label>
+                <label class="checkbox-item"><input type="checkbox"> Tenant liaison</label>
+                <label class="checkbox-item"><input type="checkbox"> Legal compliance</label>
+                <label class="checkbox-item"><input type="checkbox"> CSOS / Tribunal experience</label>
+                <label class="checkbox-item"><input type="checkbox"> Insurance claims</label>
+                <label class="checkbox-item"><input type="checkbox"> Body corporate secretarial</label>
+                <label class="checkbox-item"><input type="checkbox"> Project management</label>
+                <label class="checkbox-item"><input type="checkbox"> Dispute resolution</label>
+              </div>
+            </div>
             <div class="form-group full">
               <label>Role description <span class="optional">(optional)</span></label>
               <textarea placeholder="Describe the role, key responsibilities, and what you're looking for in a candidate..."></textarea>
