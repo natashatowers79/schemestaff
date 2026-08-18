@@ -12,6 +12,7 @@ const FORM_TYPES = {
   'register-employee': 'Candidates',
   'register-employer': 'Employers',
   'post-job': 'Job postings',
+  'post-availability': 'Availability postings',
   'contact': 'Contact messages',
 };
 
