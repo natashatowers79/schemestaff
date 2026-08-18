@@ -1,0 +1,13 @@
+# GitHub Pages build configuration.
+#
+# The only job this file has is keeping server-side code off the public site.
+# Everything under backend/ runs on the Axxess hosting at api.schemestaff.co.za;
+# it is version-controlled here, but publishing it to schemestaff.co.za would
+# serve the PHP source as readable text to anyone who asked for it.
+
+exclude:
+  - backend
+  - README.md
+
+# The site is plain HTML — no Liquid templating, no layouts, no posts.
+# Files are copied through as-is.

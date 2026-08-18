@@ -1,12 +1,18 @@
 // Scheme Staff — shared front-end behaviour.
 //
-// Form submissions post to a Google Apps Script endpoint that writes them to
-// a Google Sheet and saves uploaded documents to Drive (see
-// google-apps-script/Code.gs for the receiving code and setup steps).
+// Form submissions post to the PHP intake on our own hosting, which writes them
+// to MySQL and stores uploaded documents outside the web root (see backend/ for
+// the receiving code and setup steps).
 // While SUBMIT_URL below is empty, submitting a form validates it and shows
 // a preview confirmation only — nothing is stored or sent.
+//
+// Go live by setting this to the endpoint below — but only once the database is
+// created and backend/README.md step 5 passes. Pointing the live site at an
+// unfinished backend means real registrations failing in front of real people.
+//
+//   https://api.schemestaff.co.za/submit.php
 
-const SUBMIT_URL = ''; // paste the Apps Script web app URL (ends in /exec) between the quotes
+const SUBMIT_URL = ''; // paste the endpoint above between the quotes to go live
 
 const FORM_TYPES = {
   'register-employee': 'Candidates',
@@ -16,7 +22,7 @@ const FORM_TYPES = {
   'contact': 'Contact messages',
 };
 
-const MAX_UPLOAD_BYTES = 15 * 1024 * 1024; // Apps Script payload headroom
+const MAX_UPLOAD_BYTES = 40 * 1024 * 1024; // server allows 64MB; base64 inflates by ~⅓
 
 document.addEventListener('DOMContentLoaded', () => {
 
@@ -51,7 +57,7 @@ document.addEventListener('DOMContentLoaded', () => {
         showSuccess(form, false);
       } catch (err) {
         showAlert(form, err.message === 'too-large'
-          ? 'Your uploaded files are too large in total (15MB max). Please use smaller files and try again.'
+          ? 'Your uploaded files are too large in total (40MB max). Please use smaller files and try again.'
           : 'Something went wrong sending your form. Please check your connection and try again — nothing has been lost.');
         button.disabled = false;
         button.textContent = buttonText;

@@ -1,0 +1,29 @@
+# Scheme Staff API — Apache configuration.
+
+# No directory listings.
+Options -Indexes
+
+# Force HTTPS. Candidate submissions include ID numbers and credit reports;
+# they must never travel over plain HTTP.
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteCond %{HTTPS} !=on
+  RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+</IfModule>
+
+<IfModule mod_headers.c>
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set X-Frame-Options "DENY"
+  Header always set Referrer-Policy "no-referrer"
+  Header always set Strict-Transport-Security "max-age=31536000"
+</IfModule>
+
+# Nothing here should ever be indexed.
+<IfModule mod_headers.c>
+  Header always set X-Robots-Tag "noindex, nofollow"
+</IfModule>
+
+# Belt and braces: refuse to serve anything that isn't the endpoint itself.
+<FilesMatch "\.(sql|md|log|ini|json|example\.php)$">
+  Require all denied
+</FilesMatch>

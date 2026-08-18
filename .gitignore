@@ -1,1 +1,7 @@
 .DS_Store
+
+# Real credentials — the template (config.example.php) is committed, this is not.
+backend/private/config.php
+
+# Uploaded candidate documents never belong in version control.
+backend/private/uploads/
