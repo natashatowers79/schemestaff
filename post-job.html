@@ -214,6 +214,16 @@
               <input type="text" placeholder="e.g. Cape Town — Claremont">
             </div>
             <div class="form-group">
+              <label>Minimum experience level <span class="required">*</span></label>
+              <select>
+                <option value="" disabled selected>Select...</option>
+                <option>Junior (0–2 years)</option>
+                <option>Mid-level (3–5 years)</option>
+                <option>Senior (6–10 years)</option>
+                <option>Executive / EMA level (10+ years)</option>
+              </select>
+            </div>
+            <div class="form-group">
               <label>Employment type <span class="required">*</span></label>
               <div class="radio-group" style="margin-top:8px">
                 <label class="radio-card">
@@ -258,6 +268,13 @@
                   <div class="toggle-text">
                     <strong>Credit report required</strong>
                     <span>Recommended for roles involving trust accounts, levy collection or financial administration.</span>
+                  </div>
+                </label>
+                <label class="toggle-item">
+                  <input type="checkbox" name="csos_required">
+                  <div class="toggle-text">
+                    <strong>CSOS certification advantageous</strong>
+                    <span>Candidate should have or be working toward CSOS certification for community scheme roles.</span>
                   </div>
                 </label>
               </div>
@@ -363,12 +380,61 @@
               </div>
             </div>
             <div class="form-group full">
+              <label>Software / systems experience required</label>
+              <div class="checkbox-group">
+                <label class="checkbox-item"><input type="checkbox"> PropertyMe</label>
+                <label class="checkbox-item"><input type="checkbox"> Console</label>
+                <label class="checkbox-item"><input type="checkbox"> PropertyTree</label>
+                <label class="checkbox-item"><input type="checkbox"> WeConnectU</label>
+                <label class="checkbox-item"><input type="checkbox"> MDA Property</label>
+                <label class="checkbox-item"><input type="checkbox"> Propstack</label>
+                <label class="checkbox-item"><input type="checkbox"> Microsoft Office / Excel</label>
+                <label class="checkbox-item"><input type="checkbox"> Sage / Pastel</label>
+              </div>
+            </div>
+            <div class="form-group full">
+              <label>Legislation knowledge required</label>
+              <div class="checkbox-group">
+                <label class="checkbox-item"><input type="checkbox"> Sectional Titles Act (STA)</label>
+                <label class="checkbox-item"><input type="checkbox"> STSMA</label>
+                <label class="checkbox-item"><input type="checkbox"> CSOS Act</label>
+                <label class="checkbox-item"><input type="checkbox"> Conduct rules & management rules</label>
+                <label class="checkbox-item"><input type="checkbox"> FAIS</label>
+                <label class="checkbox-item"><input type="checkbox"> Consumer Protection Act</label>
+                <label class="checkbox-item"><input type="checkbox"> POPIA</label>
+                <label class="checkbox-item"><input type="checkbox"> Labour law</label>
+              </div>
+            </div>
+            <div class="form-group full">
               <label>Role description <span class="optional">(optional)</span></label>
               <textarea placeholder="Describe the role, key responsibilities, and what you're looking for in a candidate..."></textarea>
             </div>
             <div class="form-group full">
               <label>Specific certifications or requirements <span class="optional">(optional)</span></label>
               <input type="text" placeholder="e.g. Sectional Titles Act knowledge, MDA experience">
+            </div>
+          </div>
+        </div>
+
+        <!-- SECTION 5 — What we offer -->
+        <div class="form-section">
+          <div class="form-section-header">
+            <div class="form-section-num">5</div>
+            <h2 class="form-section-title">What we offer</h2>
+          </div>
+          <div class="form-grid">
+            <p class="field-note">This section is shown to candidates alongside your posting. A strong offer attracts better applicants.</p>
+            <div class="form-group full">
+              <label>Working environment <span class="optional">(optional)</span></label>
+              <input type="text" placeholder="e.g. Professional, collaborative team environment in a well-established managing agent">
+            </div>
+            <div class="form-group full">
+              <label>Growth & development opportunities <span class="optional">(optional)</span></label>
+              <input type="text" placeholder="e.g. Opportunity to grow across a portfolio of community schemes">
+            </div>
+            <div class="form-group full">
+              <label>Benefits <span class="optional">(optional)</span></label>
+              <textarea placeholder="e.g. Medical aid contribution, performance bonus, professional development support..."></textarea>
             </div>
           </div>
         </div>
