@@ -3,16 +3,10 @@
 // Form submissions post to the PHP intake on our own hosting, which writes them
 // to MySQL and stores uploaded documents outside the web root (see backend/ for
 // the receiving code and setup steps).
-// While SUBMIT_URL below is empty, submitting a form validates it and shows
-// a preview confirmation only — nothing is stored or sent.
-//
-// Go live by setting this to the endpoint below — but only once the database is
-// created and backend/README.md step 5 passes. Pointing the live site at an
-// unfinished backend means real registrations failing in front of real people.
-//
-//   https://api.schemestaff.co.za/submit.php
+// Emptying SUBMIT_URL puts the site back into preview mode, where forms validate
+// and confirm but store nothing — useful if the backend ever needs taking down.
 
-const SUBMIT_URL = ''; // paste the endpoint above between the quotes to go live
+const SUBMIT_URL = 'https://api.schemestaff.co.za/submit.php';
 
 const FORM_TYPES = {
   'register-employee': 'Candidates',
