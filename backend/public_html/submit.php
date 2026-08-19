@@ -211,6 +211,24 @@ try {
 $from = $config['from_email'] ?? 'no-reply@schemestaff.co.za';
 
 /**
+ * Make a subject line safe for a mail header.
+ *
+ * Headers must be ASCII. An em dash sent raw arrives as mojibake ("â") and,
+ * worse, reads as a malformed header to spam filters. RFC 2047 encoding is the
+ * correct fix; mb_encode_mimeheader also folds long lines at the 75-character
+ * limit, which hand-rolled base64 would not.
+ */
+function mime_subject(string $subject): string {
+    if (!preg_match('/[\x80-\xFF]/', $subject)) {
+        return $subject;
+    }
+    if (function_exists('mb_encode_mimeheader')) {
+        return mb_encode_mimeheader($subject, 'UTF-8', 'B', "\r\n");
+    }
+    return '=?UTF-8?B?' . base64_encode($subject) . '?=';
+}
+
+/**
  * Send a plain-text message, never letting mail trouble reach the caller.
  *
  * The fifth argument sets the *envelope* sender to match the From header. Without
@@ -224,7 +242,7 @@ function send_mail(string $to, string $subject, string $body, string $headers, s
         return false;
     }
     $envelope = filter_var($from, FILTER_VALIDATE_EMAIL) ? '-f' . $from : '';
-    $sent     = @mail($to, $subject, $body, $headers, $envelope);
+    $sent     = @mail($to, mime_subject($subject), $body, $headers, $envelope);
     if (!$sent) {
         error_log('[schemestaff] mail() refused message to ' . $to);
     }
