@@ -46,5 +46,5 @@ return [
     // person who filled the form in. MUST stay on schemestaff.co.za — the domain's
     // SPF record authorises this server to send as schemestaff.co.za and nothing
     // else, so any other domain here would fail SPF/DMARC and be spam-filed.
-    'from_email' => 'no-reply@schemestaff.co.za',
+    'from_email' => 'info@schemestaff.co.za',
 ];
