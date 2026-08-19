@@ -210,6 +210,27 @@ try {
 
 $from = $config['from_email'] ?? 'no-reply@schemestaff.co.za';
 
+/**
+ * Send a plain-text message, never letting mail trouble reach the caller.
+ *
+ * The fifth argument sets the *envelope* sender to match the From header. Without
+ * it the envelope sender is the hosting account address while the visible From is
+ * something else, and that mismatch — on a domain with no DKIM and no sending
+ * history — is what lands these messages in junk folders.
+ */
+function send_mail(string $to, string $subject, string $body, string $headers, string $from): bool {
+    if (!function_exists('mail')) {
+        error_log('[schemestaff] mail() unavailable — message to ' . $to . ' not sent');
+        return false;
+    }
+    $envelope = filter_var($from, FILTER_VALIDATE_EMAIL) ? '-f' . $from : '';
+    $sent     = @mail($to, $subject, $body, $headers, $envelope);
+    if (!$sent) {
+        error_log('[schemestaff] mail() refused message to ' . $to);
+    }
+    return (bool) $sent;
+}
+
 /** Plain-text mail headers. Values are sanitised to prevent header injection. */
 function mail_headers(string $from, ?string $replyTo = null): string {
     $strip   = fn(?string $v): string => str_replace(["\r", "\n"], '', (string) $v);
@@ -268,7 +289,7 @@ if (!empty($config['notify_email'])) {
         }
     }
 
-    @mail(
+    send_mail(
         $config['notify_email'],
         'Scheme Staff — new ' . $formType . ' submission (#' . $submissionId . ')',
         "A new submission has been received.\n\n"
@@ -279,14 +300,15 @@ if (!empty($config['notify_email'])) {
             . "Submitted values\n"
             . "----------------\n" . $summary . "\n"
             . "This is stored in the database — nothing here needs keeping.\n",
-        mail_headers($from, $submitterEmail)
+        mail_headers($from, $submitterEmail),
+        $from
     );
 }
 
 // 2. Reassure the person who filled the form in. Under POPIA it is good practice
 //    to tell someone what has been collected and who is holding it.
 if ($submitterEmail !== null) {
-    @mail(
+    send_mail(
         $submitterEmail,
         'Scheme Staff — we have received ' . $description,
         "Thank you — we have received {$description}.\n\n"
@@ -300,7 +322,8 @@ if ($submitterEmail !== null) {
             . "reply to this email and we will delete it.\n\n"
             . "Scheme Staff — Property Recruitment\n"
             . "https://schemestaff.co.za\n",
-        mail_headers($from, $config['notify_email'] ?: null)
+        mail_headers($from, $config['notify_email'] ?: null),
+        $from
     );
 }
 
