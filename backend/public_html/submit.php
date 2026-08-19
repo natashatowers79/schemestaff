@@ -196,16 +196,111 @@ try {
          'submission failed: ' . $e->getMessage(), 500);
 }
 
-/* ── Optional notification. Never let a mail failure fail the submission. ── */
+/* ── Email ──────────────────────────────────────────────────────────────────
+ *
+ * Both messages are sent with @ and after the data is safely committed. Mail is
+ * the least reliable part of any shared host, and a submission that is already
+ * in the database must never be reported as failed because a mail server sulked.
+ *
+ * The From address must stay on schemestaff.co.za whoever the recipient is: the
+ * domain's SPF record authorises this server to send as schemestaff.co.za and
+ * nothing else. Sending as, say, an @me.com address would fail SPF and DMARC and
+ * be spam-filed or rejected.
+ */
 
+$from = $config['from_email'] ?? 'no-reply@schemestaff.co.za';
+
+/** Plain-text mail headers. Values are sanitised to prevent header injection. */
+function mail_headers(string $from, ?string $replyTo = null): string {
+    $strip   = fn(?string $v): string => str_replace(["\r", "\n"], '', (string) $v);
+    $headers = [
+        'From: Scheme Staff <' . $strip($from) . '>',
+        'Content-Type: text/plain; charset=utf-8',
+        'MIME-Version: 1.0',
+    ];
+    if ($replyTo !== null && filter_var($replyTo, FILTER_VALIDATE_EMAIL)) {
+        $headers[] = 'Reply-To: ' . $strip($replyTo);
+    }
+    return implode("\r\n", $headers);
+}
+
+/** The address the person filling in the form gave us, if we can find one. */
+function submitter_email(array $projection, array $fields): ?string {
+    foreach (['email', 'contact_email', 'login_email'] as $column) {
+        $candidate = $projection[$column] ?? null;
+        if ($candidate && filter_var($candidate, FILTER_VALIDATE_EMAIL)) {
+            return $candidate;
+        }
+    }
+    // Fall back to scanning the raw labels, in case the mapping missed it.
+    foreach ($fields as $label => $value) {
+        if (stripos((string) $label, 'email') !== false
+            && is_string($value)
+            && filter_var(trim($value), FILTER_VALIDATE_EMAIL)) {
+            return trim($value);
+        }
+    }
+    return null;
+}
+
+/** What the submitter should see this submission called. */
+const FORM_DESCRIPTIONS = [
+    'Candidates'            => 'your candidate registration',
+    'Employers'             => 'your employer registration',
+    'Job postings'          => 'your job posting',
+    'Availability postings' => 'your availability posting',
+    'Contact messages'      => 'your message',
+];
+
+$submitterEmail = submitter_email($projection ?? [], $fields);
+// array_key_exists rather than ?? — the null coalescing operator does not reliably
+// suppress the undefined-key warning on a constant array.
+$description = array_key_exists($formType, FORM_DESCRIPTIONS)
+    ? FORM_DESCRIPTIONS[$formType]
+    : 'your submission';
+
+// 1. Tell Scheme Staff something came in.
 if (!empty($config['notify_email'])) {
+    $summary = '';
+    foreach ($fields as $label => $value) {
+        if (is_string($value) && trim($value) !== '') {
+            $summary .= "  {$label}: {$value}\n";
+        }
+    }
+
     @mail(
         $config['notify_email'],
-        'Scheme Staff — new ' . $formType . ' submission',
+        'Scheme Staff — new ' . $formType . ' submission (#' . $submissionId . ')',
         "A new submission has been received.\n\n"
-            . "Form: {$formType}\nReference: {$submissionId}\n"
-            . 'Received: ' . date('Y-m-d H:i') . "\n",
-        'From: no-reply@schemestaff.co.za'
+            . "Form:       {$formType}\n"
+            . "Reference:  {$submissionId}\n"
+            . 'Received:   ' . date('Y-m-d H:i') . "\n"
+            . 'Attachments: ' . count($prepared) . "\n\n"
+            . "Submitted values\n"
+            . "----------------\n" . $summary . "\n"
+            . "This is stored in the database — nothing here needs keeping.\n",
+        mail_headers($from, $submitterEmail)
+    );
+}
+
+// 2. Reassure the person who filled the form in. Under POPIA it is good practice
+//    to tell someone what has been collected and who is holding it.
+if ($submitterEmail !== null) {
+    @mail(
+        $submitterEmail,
+        'Scheme Staff — we have received ' . $description,
+        "Thank you — we have received {$description}.\n\n"
+            . "Your reference is {$submissionId}. Please quote it if you get in touch.\n\n"
+            . "What happens next\n"
+            . "-----------------\n"
+            . "A member of the Scheme Staff team will review your submission and be\n"
+            . "in touch. We do not share your details with anyone outside Scheme Staff\n"
+            . "without your agreement.\n\n"
+            . "If you did not submit this, or you would like your information removed,\n"
+            . "reply to this email and we will delete it.\n\n"
+            . "Scheme Staff — Property Recruitment\n"
+            . "https://schemestaff.co.za\n",
+        mail_headers($from, $config['notify_email'] ?: null)
     );
 }
 

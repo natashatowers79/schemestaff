@@ -39,6 +39,12 @@ return [
     // Extensions accepted for uploads. Anything else is rejected outright.
     'allowed_extensions' => ['pdf', 'doc', 'docx', 'jpg', 'jpeg', 'png', 'webp'],
 
-    // Optional: email address to notify on each submission. Leave empty to skip.
+    // Address notified whenever a form is submitted. Leave empty to skip.
     'notify_email' => '',
+
+    // The From address on both the notification and the confirmation sent to the
+    // person who filled the form in. MUST stay on schemestaff.co.za — the domain's
+    // SPF record authorises this server to send as schemestaff.co.za and nothing
+    // else, so any other domain here would fail SPF/DMARC and be spam-filed.
+    'from_email' => 'no-reply@schemestaff.co.za',
 ];
