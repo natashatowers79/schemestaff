@@ -20,6 +20,8 @@ const MAX_UPLOAD_BYTES = 40 * 1024 * 1024; // server allows 64MB; base64 inflate
 
 document.addEventListener('DOMContentLoaded', () => {
 
+  wireIdNumberToDateOfBirth();
+
   document.querySelectorAll('form').forEach(form => {
     form.setAttribute('novalidate', '');
 
@@ -66,6 +68,76 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
 });
+
+/* ── Date of birth from SA ID number ──
+ *
+ * A South African ID number encodes the birth date in its first six digits as
+ * YYMMDD, so there is no reason to make someone type it twice. The field accepts
+ * passport numbers too, and those carry no date, so this fills in only when the
+ * input is a valid 13-digit SA ID and otherwise stays quiet. The date field
+ * remains editable either way.
+ */
+
+// SA ID numbers use a Luhn check digit, so a typo is detectable rather than
+// silently producing the wrong birth date.
+function luhnValid(digits) {
+  let sum = 0;
+  let double = false;
+  for (let i = digits.length - 1; i >= 0; i--) {
+    let n = Number(digits[i]);
+    if (double) {
+      n *= 2;
+      if (n > 9) n -= 9;
+    }
+    sum += n;
+    double = !double;
+  }
+  return sum % 10 === 0;
+}
+
+function birthDateFromIdNumber(value) {
+  const digits = value.replace(/\D/g, '');
+  if (digits.length !== 13 || !luhnValid(digits)) return null;
+
+  const year = Number(digits.slice(0, 2));
+  const month = Number(digits.slice(2, 4));
+  const day = Number(digits.slice(4, 6));
+
+  // Two digits can't distinguish 1985 from 2085. Anything that would put the
+  // birth date in the future belongs to the previous century.
+  const currentYY = new Date().getFullYear() % 100;
+  const fullYear = year > currentYY ? 1900 + year : 2000 + year;
+
+  const date = new Date(Date.UTC(fullYear, month - 1, day));
+  // Rejects impossible dates like 31 February, which JS would otherwise roll over.
+  if (date.getUTCMonth() !== month - 1 || date.getUTCDate() !== day) return null;
+
+  return date.toISOString().slice(0, 10);
+}
+
+function wireIdNumberToDateOfBirth() {
+  const idField = document.getElementById('id-number');
+  const dobField = document.getElementById('date-of-birth');
+  if (!idField || !dobField) return;
+
+  // Only ever overwrite a value this code put there, never one typed by hand.
+  let autoFilled = '';
+
+  idField.addEventListener('input', () => {
+    const derived = birthDateFromIdNumber(idField.value);
+    if (derived) {
+      if (dobField.value === '' || dobField.value === autoFilled) {
+        dobField.value = derived;
+        autoFilled = derived;
+        dobField.closest('.form-group').classList.remove('has-error');
+      }
+    } else if (dobField.value === autoFilled && autoFilled !== '') {
+      // The ID was edited into something invalid — clear what we derived from it.
+      dobField.value = '';
+      autoFilled = '';
+    }
+  });
+}
 
 /* ── Validation ── */
 
